@@ -21,3 +21,6 @@ timeout: '1600s'  # Adjust the timeout to your needs
 
 images:
   - 'gcr.io/$PROJECT_ID/icoa-gae'
+
+options:
+  logging: REGIONAL_USER_OWNED_BUCKET
