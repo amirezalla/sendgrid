@@ -1,0 +1,37 @@
+runtime: custom
+env: flex
+
+manual_scaling:
+  instances: 1
+
+resources:
+  cpu: 1
+  memory_gb: 1
+  disk_size_gb: 10
+
+env_variables:
+  APP_NAME: Laravel
+  APP_ENV: production
+  APP_KEY: base64:OkczePMAvQzY56bqWKQFQxWEbTjqXMkWr6ntdr2AKJ0=
+  APP_DEBUG: false  # Ensure this is false for production
+  APP_URL: https://icoa-gae.ey.r.appspot.comt  # Adjust based on your actual production URL
+
+  LOG_CHANNEL: stack
+  LOG_DEPRECATIONS_CHANNEL: null
+  LOG_LEVEL: debug
+
+  DB_CONNECTION: mysql
+  DB_HOST: 127.0.0.1  # For Cloud SQL, use the Cloud SQL instance's private IP
+  DB_PORT: 3306
+  DB_DATABASE: laravel
+  DB_USERNAME: root
+  DB_PASSWORD:
+
+  MAIL_MAILER: smtp
+  MAIL_HOST: smtp.sendgrid.net
+  MAIL_PORT: 587
+  MAIL_USERNAME: apikey
+  MAIL_PASSWORD: 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
+  MAIL_ENCRYPTION: tls
+  MAIL_FROM_NAME: "ICOA"
+  MAIL_FROM_ADDRESS: a.allahverdi@icoa.it
