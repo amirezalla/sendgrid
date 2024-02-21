@@ -23,4 +23,4 @@ images:
   - 'gcr.io/$PROJECT_ID/icoa-gae'
 
 options:
-  logging: REGIONAL_USER_OWNED_BUCKET
+  logging: none
