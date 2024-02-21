@@ -24,6 +24,7 @@ class TestEmailController extends Controller
 
         $inputs = $validator->validated();
 
+        dd('something');
         Mail::to($inputs["to"])->send(new TestEmail($inputs)); 
 
         return response()->json(['message' => 'Email sent successfully']);
