@@ -28,4 +28,11 @@ class TestEmailController extends Controller
 
         return response()->json(['message' => 'Email sent successfully']);
     }
+
+    public function apiTest(){
+
+        return response()->json(['message' => 'api sent successfully']);
+
+
+    }
 }
