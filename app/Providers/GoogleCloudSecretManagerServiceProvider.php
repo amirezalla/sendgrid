@@ -5,7 +5,7 @@ namespace App\Providers;
 use Google\Cloud\SecretManager\V1\SecretManagerServiceClient;
 use Illuminate\Support\ServiceProvider;
 
-class GoogleSecretsServiceProvider extends ServiceProvider
+class GoogleCloudSecretManagerServiceProvider extends ServiceProvider
 {
     public function boot()
     {
