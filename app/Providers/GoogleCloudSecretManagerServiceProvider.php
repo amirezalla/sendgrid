@@ -2,57 +2,42 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Google\Cloud\SecretManager\V1\SecretManagerServiceClient;
+use Illuminate\Support\ServiceProvider;
 
-class GoogleCloudSecretManagerServiceProvider extends ServiceProvider
+class GoogleSecretsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        if (app()->environment('production')) {
-            $client = new SecretManagerServiceClient();
-            $projectName = SecretManagerServiceClient::projectName('icoa-gae');
+        if (app()->environment('production')) { // Only run this in production
+            try {
+                // Instantiates a client
+                $client = new SecretManagerServiceClient();
 
-            $secrets = [
-                'APP_NAME',
-                'APP_KEY',
-                'APP_ENV',
-                'LOG_CHANNEL',
-                'LOG_DEPRECATIONS_CHANNEL',
-                'LOG_LEVEL',
-                'BROADCAST_DRIVER',
-                'CACHE_DRIVER',
-                'CACHE_DRIVER',
-                'FILESYSTEM_DISK',
-                'QUEUE_CONNECTION',
-                'SESSION_DRIVER',
-                'SESSION_LIFETIME',
-                'MEMCACHED_HOST',
-                'REDIS_HOST',
-                'REDIS_PASSWORD',
-                'REDIS_PORT',
-                'MAIL_MAILER',
-                'MAIL_HOST',
-                'MAIL_PORT',
-                'MAIL_USERNAME',
-                'MAIL_PASSWORD',
-                'MAIL_ENCRYPTION',
-                'MAIL_FROM_NAME',
-                'MAIL_FROM_ADDRESS',
-                // Add other secrets here
-            ];
+                // Build the resource name of the secret version
+                $secretName = $client->secretVersionName('341264949013', 'sendgrid-env', 'latest');
 
-            foreach ($secrets as $secret) {
-                $secretName = $client->secretVersionName($projectName, $secret, 'latest');
+                // Access the secret version
                 $response = $client->accessSecretVersion($secretName);
                 $payload = $response->getPayload()->getData();
-                putenv("$secret=$payload");
+
+                // Assuming the secret payload is a JSON string with your env variables
+                $envVars = json_decode($payload, true);
+                if (is_array($envVars)) {
+                    foreach ($envVars as $key => $value) {
+                        // Set the environment variable
+                        putenv("$key=$value");
+                    }
+                }
+            } catch (\Exception $e) {
+                // Handle exceptions, potentially log them or alert in some way
+                error_log('Error fetching secrets from Google Secret Manager: ' . $e->getMessage());
             }
         }
     }
 
     public function register()
     {
-        
+        //
     }
 }
