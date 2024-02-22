@@ -24,9 +24,13 @@ class TestEmailController extends Controller
 
         $inputs = $validator->validated();
 
-        Mail::to($inputs["to"])->send(new TestEmail($inputs)); 
-
-        return response()->json(['message' => 'Email sent successfully']);
+        try {
+            Mail::to($inputs["to"])->send(new TestEmail($inputs)); 
+            return response()->json(['message' => 'Email sent successfully']);
+        } catch (\Exception $e) {
+            \Log::error('Mail sending failed: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to send email, please try again later.'], 500);
+        }
     }
 
     public function apiTest(){

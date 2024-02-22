@@ -17,6 +17,12 @@ use App\Http\Controllers\TestEmailController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/sendEmail', [TestEmailController::class, 'send'] );
 
 
+
+Route::get('/test-mail', function () {
+    \Mail::raw('This is a simple test mail.', function ($message) {
+        $message->to('a.allahverdi@icoa.it')->subject('Test Mail');
+    });
+    return 'Test mail sent.';
+});
