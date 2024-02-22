@@ -29,7 +29,7 @@ class TestEmailController extends Controller
             return response()->json(['message' => 'Email sent successfully']);
         } catch (\Exception $e) {
             \Log::error('Mail sending failed: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to send email, please try again later.'], 500);
+            return response()->json(['error' => 'Failed to send email, please try again later.'.$e->getMessage()], 500);
         }
     }
 
