@@ -11,8 +11,6 @@ class TestEmailController extends Controller
 {
     public function send(Request $request)
     {
-
-
         $validator = Validator::make($request->all(), [
             'to' => 'required|email',
             'message' => 'required',
