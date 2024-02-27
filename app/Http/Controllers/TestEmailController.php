@@ -2,19 +2,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\TestEmail;
 use App\Services\SendGridService;
+
+use SendGrid\Mail\Mail;
+
+
+
+
+
+
+
+
 
 class TestEmailController extends Controller
 {
     public function send(Request $request)
     {
+
+
         $validator = Validator::make($request->all(), [
             'to' => 'required|email',
             'message' => 'required',
-            'address' => 'required|email',
+            'from' => 'required|email',
+            'from_name' => 'required',
             'subject' => 'required',
         ]);
     
@@ -24,13 +36,26 @@ class TestEmailController extends Controller
 
         $inputs = $validator->validated();
 
+        $email = new Mail();
+        $email->setFrom($inputs['from'], $inputs['name']);
+        $email->setSubject($inputs['subject']);
+        $email->addTo($inputs['to'], $inputs['to']);
+        $email->addContent(
+            "text/html", $inputs['message']
+        );
+        $sendgrid = new \SendGrid(getenv('MAIL_PASSWORD'));
         try {
-            Mail::to($inputs["to"])->send(new TestEmail($inputs)); 
-            return response()->json(['message' => 'Email sent successfully']);
-        } catch (\Exception $e) {
-            \Log::error('Mail sending failed: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to send email, please try again later.'.$e->getMessage()], 500);
+            $response = $sendgrid->send($email);
+            print $response->statusCode() . "\n";
+            print_r($response->headers());
+            print $response->body() . "\n";
+        } catch (Exception $e) {
+            echo 'Caught exception: '. $e->getMessage() ."\n";
         }
+
+
+
+    
     }
 
     public function apiTest(){
