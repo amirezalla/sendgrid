@@ -37,7 +37,7 @@ class TestEmailController extends Controller
         $inputs = $validator->validated();
 
         $email = new Mail();
-        $email->setFrom($inputs['from'], $inputs['name']);
+        $email->setFrom($inputs['from'], $inputs['from_name']);
         $email->setSubject($inputs['subject']);
         $email->addTo($inputs['to'], $inputs['to']);
         $email->addContent(
