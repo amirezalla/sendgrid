@@ -9,10 +9,8 @@
 <body>
     <!-- Email Body -->
     <div style="margin: 0 auto; max-width: 600px; font-family: Arial, sans-serif;">
-        <h2 style="color: #333;">Hello,</h2>
-
         <!-- Dynamic Content -->
-        <p>{{ $test_message }}</p>
+        <p>{{ $message }}</p>
         <!-- You can pass dynamic content to your email template with variables like $content -->
 
         <!-- Footer -->

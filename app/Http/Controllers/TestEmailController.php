@@ -5,8 +5,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\TestEmail;
 use App\Services\SendGridService;
-
+use SendGrid\Mail\Footer;
 use SendGrid\Mail\Mail;
+use SendGrid\Mail\MailSettings;
+
 
 
 
@@ -35,14 +37,19 @@ class TestEmailController extends Controller
         }
 
         $inputs = $validator->validated();
+        $emailHtmlContent = view('emails.engine', ['message' => $inputs['message']])->render();
 
         $email = new Mail();
         $email->setFrom($inputs['from'], $inputs['from_name']);
         $email->setSubject($inputs['subject']);
         $email->addTo($inputs['to'], $inputs['to']);
         $email->addContent(
-            "text/html", $inputs['message']
+            "text/html", $emailHtmlContent
         );
+        $footer = new Footer();
+        $footer->setEnable(false);
+        $mail_settings = new MailSettings();
+        $mail_settings->setFooter($footer);
         $sendgrid = new \SendGrid(getenv('MAIL_PASSWORD'));
         try {
             $response = $sendgrid->send($email);
