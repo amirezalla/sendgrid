@@ -11,7 +11,7 @@ class GoogleCloudSecretManagerServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        if (env('APP_ENV')=="production") { // Only run this in production
+// Only run this in production
             try {
                 // Instantiates a client
                 $client = new SecretManagerServiceClient();
@@ -43,7 +43,7 @@ class GoogleCloudSecretManagerServiceProvider extends ServiceProvider
                 // Handle exceptions, potentially log them or alert in some way
                 error_log('Error fetching secrets from Google Secret Manager: ' . $e->getMessage());
             }
-        }
+
     }
 
     public function register()
