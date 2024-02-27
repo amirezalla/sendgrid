@@ -6,6 +6,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendGridEmail;
+use Google\Cloud\SecretManager\V1\SecretManagerServiceClient;
+
 
 
 class SendGridService
@@ -15,8 +17,7 @@ class SendGridService
 
     public function __construct($apiKey)
     {
-        $this->apiKey = $apiKey;
-        $this->client = new Client([
+            $this->client = new Client([
             // Base URI is used with relative requests
             'base_uri' => 'https://api.sendgrid.com/',
         ]);

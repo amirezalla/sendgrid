@@ -5,11 +5,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\TestEmail;
+use App\Services\SendGridService;
 
 class TestEmailController extends Controller
 {
     public function send(Request $request)
     {
+
 
         $validator = Validator::make($request->all(), [
             'to' => 'required|email',
