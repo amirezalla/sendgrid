@@ -11,7 +11,6 @@ class TestEmailController extends Controller
 {
     public function send(Request $request)
     {
-        dd(env('MAIL_PASSWORD'),config('mail.mailers.smtp.password'));
         $validator = Validator::make($request->all(), [
             'to' => 'required|email',
             'message' => 'required',
