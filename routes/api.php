@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/sendEmail', [TestEmailController::class, 'send'] );
+Route::post('/sendBatchEmail', [TestEmailController::class, 'sendBatch'] );
+
 Route::post('/createSender', [SendGridController::class, 'createSender']);
 
 Route::post('/apiTest', [TestEmailController::class, 'apiTest']);
