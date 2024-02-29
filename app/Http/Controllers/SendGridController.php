@@ -10,7 +10,7 @@ class SendGridController extends Controller
 {
     public function createSender(Request $request)
     {
-        $sendGridService = new SendGridService(env('MAIL_PASSWORD'));
+        $sendGridService = new SendGridService(getenv('MAIL_PASSWORD'));
 
         $name=$request->name;
         $email=$request->email;
@@ -38,12 +38,23 @@ class SendGridController extends Controller
             $domain=$this->extractDomainFromEmail($email);
             if(!$sendGridService->checkIfDomainAuthenticated($domain)){
                 $sendGridService->createSenderAuthenticationDomain($domain,$email);
-            } 
+            }
             return response()->json(['success' => true, 'response' => $response]);
         }else{
             return response()->json(['success' => false, 'response' => 'failed']);
         }
 
+    }
+
+    public static function addIpToAllowed(Request $request){
+        $sendGridService = new SendGridService(getenv('MAIL_PASSWORD'));
+
+        $response = $sendGridService->addIpToWhitelist($request->ip());
+        if($response){
+            return response()->json(['success' => true, 'response' => $response]);
+        }else{
+            return response()->json(['success' => false, 'response' => 'failed']);
+        }
     }
 
 
@@ -55,7 +66,7 @@ class SendGridController extends Controller
             $parts = explode('@', $email);
             return $parts[1]; // Return the domain part
         }
-        
+
         // Return an empty string if '@' is not found in the email
         return '';
     }

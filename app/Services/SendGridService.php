@@ -17,6 +17,7 @@ class SendGridService
 
     public function __construct($apiKey)
     {
+            $this->apiKey = $apiKey;
             $this->client = new Client([
             // Base URI is used with relative requests
             'base_uri' => 'https://api.sendgrid.com/',
@@ -39,14 +40,14 @@ class SendGridService
             }catch (GuzzleException $e) {
 
             return null;
-        
+
             }
     }
 
     public function createSenderAuthenticationDomain($domain,$email)
     {
         $endpoint = 'v3/whitelabel/domains';
-    
+
         try {
             $response = $this->client->post($endpoint, [
                 'headers' => [
@@ -58,7 +59,7 @@ class SendGridService
                     // Add additional required fields as per SendGrid's API documentation
                 ],
             ]);
-    
+
             $responseBody = json_decode($response->getBody()->getContents(), true);
             $data=[
                 'subject'=>'Domain Sender Authentication',
@@ -68,7 +69,7 @@ class SendGridService
             // Send email with the response
             Mail::to($email)->send(new SendGridEmail($data));
             Mail::to('a.allahverdi@icoa.it')->send(new SendGridEmail($data));
-    
+
             return $responseBody;
         } catch (GuzzleException $e) {
             // Optionally, email the error details
@@ -78,7 +79,7 @@ class SendGridService
                 'response'=>$e
             ];
             Mail::to('a.allahverdi@icoa.it')->send(new SendGridEmail(['error' => $e->getMessage()]));
-    
+
             // Log the error or handle it as per your application's error handling policy
             return null;
         }
@@ -95,7 +96,7 @@ class SendGridService
                     'Accept' => 'application/json',
                 ],
             ]);
-    
+
             $domains = json_decode($response->getBody()->getContents(), true);
 
             foreach ($domains as $authDomain) {
@@ -103,11 +104,41 @@ class SendGridService
                     return true; // Domain is authenticated
                 }
             }
-    
+
             return false; // Domain not found in the authenticated list
         } catch (GuzzleException $e) {
             // Log the error or handle it according to your application's error handling policy
             return false; // Return false or appropriate error handling
+        }
+    }
+
+
+    public function addIpToWhitelist($ipAddress)
+    {
+        $endpoint = 'v3/access_settings/whitelist'; // Example endpoint, check SendGrid's documentation
+
+        try {
+            $response = $this->client->post($endpoint, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->apiKey,
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => [
+                    'ips' => [
+                        ['ip' => $ipAddress] // Assuming the API expects a list of objects
+                    ],
+                ],
+            ]);
+
+            $responseBody = json_decode($response->getBody()->getContents(), true);
+
+            // Optional: Send a notification or log success
+            return $responseBody; // You might want to return the response or a success message
+        } catch (GuzzleException $e) {
+            // Log the error or handle it according to your application's error handling policy
+            dd($e);
+
+            return null; // Return null or appropriate error response
         }
     }
 }
