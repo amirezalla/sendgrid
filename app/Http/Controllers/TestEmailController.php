@@ -24,6 +24,7 @@ class TestEmailController extends Controller
     {
 
 
+
         $validator = Validator::make($request->all(), [
             'to' => 'required|email',
             'message' => 'required',
@@ -31,7 +32,7 @@ class TestEmailController extends Controller
             'from_name' => 'required',
             'subject' => 'required',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
@@ -50,7 +51,9 @@ class TestEmailController extends Controller
         $footer->setEnable(false);
         $mail_settings = new MailSettings();
         $mail_settings->setFooter($footer);
-        $sendgrid = new \SendGrid(getenv('MAIL_PASSWORD'));
+        // $sendgrid = new \SendGrid(getenv('MAIL_PASSWORD'));
+        $sendgrid = new \SendGrid($_ENV["MAIL_PASSWORD"]);
+
         try {
             $response = $sendgrid->send($email);
             print $response->statusCode() . "\n";
@@ -62,7 +65,7 @@ class TestEmailController extends Controller
 
 
 
-    
+
     }
 
     public function apiTest(){
