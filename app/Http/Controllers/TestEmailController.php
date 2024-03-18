@@ -5,8 +5,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\TestEmail;
 
-use Illuminate\Support\Facades\Mail;
-
+use App\Services\SendGridService;
+use SendGrid\Mail\Footer;
+use SendGrid\Mail\Mail;
+use SendGrid\Mail\MailSettings;
 
 
 
@@ -95,11 +97,12 @@ class TestEmailController extends Controller
 
         $emailHtmlContent = view('emails.engine', ['message' => $message])->render();
 
-        $email = new Mail();
-        $email->setFrom($from, $from);
-        $email->setSubject($subject);
+
         $recipients = explode(',', $request->input('recipients'));
         foreach($recipients as $to){
+            $email = new Mail();
+            $email->setFrom($from, $from);
+            $email->setSubject($subject);
             $email->addTo($to, $to);
             $email->addContent(
                 "text/html", $emailHtmlContent
