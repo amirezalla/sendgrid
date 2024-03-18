@@ -48,16 +48,16 @@ class SendGridController extends Controller
 
     }
 
-    public static function addIpToAllowed(Request $request){
-        $sendGridService = new SendGridService(getenv('MAIL_PASSWORD'));
+    // public static function addIpToAllowed(Request $request){
+    //     $sendGridService = new SendGridService(getenv('MAIL_PASSWORD'));
 
-        $response = $sendGridService->addIpToWhitelist($request->ip());
-        if($response){
-            return response()->json(['success' => true, 'response' => $response]);
-        }else{
-            return response()->json(['success' => false, 'response' => 'failed']);
-        }
-    }
+    //     $response = $sendGridService->addIpToWhitelist($request->ip());
+    //     if($response){
+    //         return response()->json(['success' => true, 'response' => $response]);
+    //     }else{
+    //         return response()->json(['success' => false, 'response' => 'failed']);
+    //     }
+    // }
 
 
     private function extractDomainFromEmail($email)

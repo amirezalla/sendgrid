@@ -115,34 +115,34 @@ class SendGridService
     }
 
 
-    public function addIpToWhitelist($ipAddress)
-    {
-        $endpoint = 'v3/access_settings/whitelist'; // Example endpoint, check SendGrid's documentation
+    // public function addIpToWhitelist($ipAddress)
+    // {
+    //     $endpoint = 'v3/access_settings/whitelist'; // Example endpoint, check SendGrid's documentation
 
-        try {
-            $response = $this->client->post($endpoint, [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $this->apiKey,
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => [
-                    'ips' => [
-                        ['ip' => $ipAddress] // Assuming the API expects a list of objects
-                    ],
-                ],
-            ]);
+    //     try {
+    //         $response = $this->client->post($endpoint, [
+    //             'headers' => [
+    //                 'Authorization' => 'Bearer ' . $this->apiKey,
+    //                 'Content-Type' => 'application/json',
+    //             ],
+    //             'json' => [
+    //                 'ips' => [
+    //                     ['ip' => '0.0.0.0/0'] // Assuming the API expects a list of objects
+    //                 ],
+    //             ],
+    //         ]);
 
-            $responseBody = json_decode($response->getBody()->getContents(), true);
+    //         $responseBody = json_decode($response->getBody()->getContents(), true);
 
-            // Optional: Send a notification or log success
-            return $responseBody; // You might want to return the response or a success message
-        } catch (GuzzleException $e) {
-            // Log the error or handle it according to your application's error handling policy
-            dd($e);
+    //         // Optional: Send a notification or log success
+    //         return $responseBody; // You might want to return the response or a success message
+    //     } catch (GuzzleException $e) {
+    //         // Log the error or handle it according to your application's error handling policy
+    //         dd($e);
 
-            return null; // Return null or appropriate error response
-        }
-    }
+    //         return null; // Return null or appropriate error response
+    //     }
+    // }
 
     public function getDomains()
     {

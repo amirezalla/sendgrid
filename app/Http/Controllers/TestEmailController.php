@@ -16,40 +16,47 @@ use SendGrid\Mail\MailSettings;
 
 
 
-
-
 class TestEmailController extends Controller
 {
     public function send(Request $request)
     {
-        // SendGridController::addIpToAllowed($request);
 
-        $validator = Validator::make($request->all(), [
-            'to' => 'required|email',
-            'message' => 'required',
-            'address' => 'required|email',
-            'name' => 'required',
-            'subject' => 'required',
-        ]);
+        $subject = $request->input('subject');
+        $message = $request->input('message');
+        $from = $request->input('from');
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+        $emailHtmlContent = view('emails.engine', ['message' => $message])->render();
+
+
+        $recipients = explode(',', $request->input('recipients'));
+        foreach($recipients as $to){
+            $email = new Mail();
+            $email->setFrom($from, $from);
+            $email->setSubject($subject);
+            $email->addTo($to, $to);
+            $email->addContent(
+                "text/html", $emailHtmlContent
+            );
+            $footer = new Footer();
+            $footer->setEnable(false);
+            $mail_settings = new MailSettings();
+            $mail_settings->setFooter($footer);
+            $sendgrid = new \SendGrid(getenv('MAIL_PASSWORD'));
+            try {
+                $response = $sendgrid->send($email);
+                print_r($response);
+     
+            } catch (Exception $e) {
+                echo 'Caught exception: '. $e->getMessage() ."\n";
+            }
         }
 
-        $inputs = $validator->validated();
-
-        try {
-            Mail::to($inputs["to"])->send(new TestEmail($inputs));
-            return response()->json(['message' => 'Email sent successfully']);
-        } catch (Exception $e) {
-            echo 'Caught exception: '. $e->getMessage() ."\n";
-        }
+        return true;
 
     }
 
     public function sendBatch(Request $request)
     {
-        // SendGridController::addIpToAllowed($request);
         $validator = Validator::make($request->all(), [
             'to' => 'required', // Validation for 'to' as a string, further validation happens below
             'message' => 'required',
