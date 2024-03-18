@@ -32,6 +32,9 @@
                             <li><a href="/senders/add">Add</a></li>
                         </ul>
                     </li>
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
+                            href="/how-to-use"><i data-feather="info"></i><span>How to use</span></a>
+                    </li>
 
                 </ul>
                 {{-- <ul class="sidebar-links" id="simple-bar">

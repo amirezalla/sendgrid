@@ -14,7 +14,7 @@ class SendGridController extends Controller
     {
         $sendGridService = new SendGridService(getenv('MAIL_PASSWORD'));
 
-        $name=$request->name;
+        $name=$this->randomName($email);
         $email=$request->email;
 
         $senderData = [
@@ -167,8 +167,10 @@ class SendGridController extends Controller
     {
         $sendGridService = new SendGridService(getenv('MAIL_PASSWORD'));
 
-        $name=$request->name;
+        // $name=$request->name;
         $email=$request->email;
+
+        $name=$this->randomName($email);
 
         $senderData = [
             'nickname' => $name,
@@ -194,10 +196,34 @@ class SendGridController extends Controller
             if(!$sendGridService->checkIfDomainAuthenticated($domain)){
                 $sendGridService->createSenderAuthenticationDomain($domain,$email);
             }
-            return response()->json(['success' => true, 'response' => $response]);
+            return redirect('/senders/list')->with('success', 'sender added');
         }else{
             return response()->json(['success' => false, 'response' => 'failed']);
         }
+
+    }
+
+    private function randomName($email){
+
+        $parts = explode('@', $email);
+    
+        // Further split the first part of the email to handle cases like 'a.allahverdi'
+        $nameParts = preg_split('/[._]/', $parts[0]);
+        
+        // Capitalize the first letter of each part and create a name
+        $nameParts = array_map(function($part) {
+            return ucfirst($part);
+        }, $nameParts);
+    
+        // Combine the parts back into a full name, using a space as separator
+        $name = implode(' ', $nameParts);
+        
+        $randomNumber = rand(100000, 999999);
+
+        // Append the random number to the name
+        $nameWithNumbers = $name.' '.$randomNumber;
+        
+        return $nameWithNumbers;
 
     }
     

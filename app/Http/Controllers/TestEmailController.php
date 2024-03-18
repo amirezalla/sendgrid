@@ -22,7 +22,7 @@ class TestEmailController extends Controller
 {
     public function send(Request $request)
     {
-        SendGridController::addIpToAllowed($request);
+        // SendGridController::addIpToAllowed($request);
 
         $validator = Validator::make($request->all(), [
             'to' => 'required|email',
@@ -49,7 +49,7 @@ class TestEmailController extends Controller
 
     public function sendBatch(Request $request)
     {
-        SendGridController::addIpToAllowed($request);
+        // SendGridController::addIpToAllowed($request);
         $validator = Validator::make($request->all(), [
             'to' => 'required', // Validation for 'to' as a string, further validation happens below
             'message' => 'required',

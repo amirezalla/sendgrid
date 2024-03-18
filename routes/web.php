@@ -58,6 +58,10 @@ Route::group(['prefix' => 'senders'], function () {
     Route::post('/add', [SendGridController::class, 'webAddSender']);
 
 });
+Route::get('/how-to-use', function () {
+    return view('howToUse');
+});
+
 
 
 
