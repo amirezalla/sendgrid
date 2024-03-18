@@ -99,13 +99,30 @@ class SendGridController extends Controller
         return view('domains.all', ['data' => $paginatedItems]);
     }
 
-    public function getSenders(){
+    public function getSenders(Request $request){
 
         $sendGridService = new SendGridService(env('MAIL_PASSWORD'));
-        $data = $sendGridService->getDomains();
-
-        
-        return view('domains.all', ['data'=>$data]);
+        $allSenders = $sendGridService->getSenders(); // Fetch all domains
+    
+        // Convert the domains to a collection if not already one
+        $sendersCollection = collect($allSenders);
+    
+        // Define how many items you want to display per page
+        $perPage = 10;
+    
+        // Use the current page requested by the user, default to 1
+        $currentPage = $request->input('page', 1);
+    
+        // Slice the collection to get the items to display in current page
+        $currentPageItems = $sendersCollection->slice(($currentPage - 1) * $perPage, $perPage)->all();
+    
+        // Create our paginator and pass it to the view
+        $paginatedItems = new LengthAwarePaginator($currentPageItems, count($sendersCollection), $perPage, $currentPage, [
+            'path' => $request->url(),
+            'query' => $request->query(),
+        ]);
+    
+        return view('senders.all', ['data' => $paginatedItems]);
 
 
     }
@@ -144,5 +161,46 @@ class SendGridController extends Controller
             return back()->with('warning', 'This domain already exists in the list.')->withInput();
         }
     }
+
+
+    public function webAddSender(Request $request)
+    {
+        $sendGridService = new SendGridService(getenv('MAIL_PASSWORD'));
+
+        $name=$request->name;
+        $email=$request->email;
+
+        $senderData = [
+            'nickname' => $name,
+            'from' => [
+                'email' => $email,
+                'name' => $name
+            ],
+            'reply_to' => [
+                'email' => 'replyto_address@example.com',
+                'name' => 'Reply to Name'
+            ],
+            'address' => '123 Elm St.',
+            'city' => 'Denver',
+            'state' => 'CO',
+            'zip' => '80123',
+            'country' => 'United States'
+        ];
+
+
+        $response = $sendGridService->createSenderIdentity($senderData);
+        if($response){
+            $domain=$this->extractDomainFromEmail($email);
+            if(!$sendGridService->checkIfDomainAuthenticated($domain)){
+                $sendGridService->createSenderAuthenticationDomain($domain,$email);
+            }
+            return response()->json(['success' => true, 'response' => $response]);
+        }else{
+            return response()->json(['success' => false, 'response' => 'failed']);
+        }
+
+    }
     
 }
+
+

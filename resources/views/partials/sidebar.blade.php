@@ -26,7 +26,11 @@
                         </ul>
                     </li>
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
-                            href="/senders"><i data-feather="users"></i><span>Senders</span></a>
+                            href="javascript:void(0)"><i data-feather="users"></i><span>Senders</span></a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="/senders/list">List</a></li>
+                            <li><a href="/senders/add">Add</a></li>
+                        </ul>
                     </li>
 
                 </ul>

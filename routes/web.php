@@ -48,6 +48,16 @@ Route::group(['prefix' => 'mail'], function () {
 
 });
 
+Route::group(['prefix' => 'senders'], function () {
+    Route::get('/list', [SendGridController::class, 'getSenders']);
+
+    Route::get('/add', function () {
+        return view('senders.add');
+    });
+
+    Route::post('/add', [SendGridController::class, 'webAddSender']);
+
+});
 
 
 

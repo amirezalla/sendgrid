@@ -23,9 +23,12 @@
                     </div>
 
                     <div class="preview">
-                        <div class="alert alert-success">
-                            the email has been sent to the reciepents!:
-                        </div>
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                The email has been sent to the reciepents!:
+                            </div>
+                        @endif
+
                     </div>
                 </div>
                 <div class="card-body">

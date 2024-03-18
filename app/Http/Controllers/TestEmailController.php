@@ -120,7 +120,7 @@ class TestEmailController extends Controller
             }
         }
 
-        return view('send', ['previewContent' => $emailHtmlContent]);
+        return  redirect('/mail/send')->with('success', 'Email sent successfully!');
         
 
     }
