@@ -143,7 +143,7 @@ class SendGridService
             return null; // Return null or appropriate error response
         }
     }
-}
+
     public function getDomains()
     {
         $endpoint = '/v3/whitelabel/domains';
