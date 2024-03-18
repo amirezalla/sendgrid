@@ -15,9 +15,7 @@ use App\Http\Controllers\SendGridController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [SendGridController::class, 'getDomains']);
 
 
 
