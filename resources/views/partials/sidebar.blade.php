@@ -19,8 +19,7 @@
                                 Email</span></a>
                     </li>
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
-                            href="javascript:void(0)"><i data-feather="monitor"></i><span
-                                class="lan-3">Domains</span></a>
+                            href="javascript:void(0)"><i data-feather="monitor"></i><span>Domains</span></a>
                         <ul class="sidebar-submenu">
                             <li><a href="/domains/list">List</a></li>
                             <li><a href="/domains/add">Add</a></li>
