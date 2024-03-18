@@ -17,7 +17,7 @@ use App\Http\Controllers\SendGridController;
 
 Route::get('/', [SendGridController::class, 'getDomains']);
 
-
+ 
 
 Route::get('/test-mail', function () {
     \Mail::raw('This is a simple test mail.', function ($message) {
