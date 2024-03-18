@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestEmailController;
+use App\Http\Controllers\SendGridController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,29 @@ Route::get('/test-mail', function () {
     });
     return 'Test mail sent.';
 });
+
+
+Route::group(['prefix' => 'domains'], function () {
+    Route::get('/list', [SendGridController::class, 'getDomains']);
+
+    Route::get('/add', function () {
+        return view('domains.add');
+    });
+
+    Route::post('/add', [SendGridController::class, 'webAddDomain']);
+
+});
+
+Route::group(['prefix' => 'mail'], function () {
+
+    Route::get('/send', function () {
+        return view('send');
+    });
+
+    Route::post('/send', [TestEmailController::class, 'sendEmail']);
+
+});
+
+
+
+

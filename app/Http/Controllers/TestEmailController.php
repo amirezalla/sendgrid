@@ -88,6 +88,40 @@ class TestEmailController extends Controller
 
     return response()->json(['message' => 'Emails sent successfully to valid recipients']);
 }
+    public function sendEmail(Request $request){
+        $subject = $request->input('subject');
+        $message = $request->input('message');
+        $from = $request->input('from');
+
+        $emailHtmlContent = view('emails.engine', ['message' => $message])->render();
+
+        $email = new Mail();
+        $email->setFrom($from, $from);
+        $email->setSubject($subject);
+        $recipients = explode(',', $request->input('recipients'));
+        foreach($recipients as $to){
+            $email->addTo($to, $to);
+            $email->addContent(
+                "text/html", $emailHtmlContent
+            );
+            $footer = new Footer();
+            $footer->setEnable(false);
+            $mail_settings = new MailSettings();
+            $mail_settings->setFooter($footer);
+            $sendgrid = new \SendGrid(getenv('MAIL_PASSWORD'));
+            try {
+                $response = $sendgrid->send($email);
+     
+            } catch (Exception $e) {
+                echo 'Caught exception: '. $e->getMessage() ."\n";
+            }
+        }
+
+        return view('send', ['previewContent' => $emailHtmlContent]);
+        
+
+    }
+
 
 
     public function apiTest(){

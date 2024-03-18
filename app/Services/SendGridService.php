@@ -17,7 +17,7 @@ class SendGridService
 
     public function __construct($apiKey)
     {
-            $this->apiKey = $apiKey;
+            $this->apiKey=$apiKey;
             $this->client = new Client([
             // Base URI is used with relative requests
             'base_uri' => 'https://api.sendgrid.com/',
@@ -98,10 +98,12 @@ class SendGridService
             ]);
 
             $domains = json_decode($response->getBody()->getContents(), true);
-
+            
             foreach ($domains as $authDomain) {
-                if (isset($authDomain['domain']) && $authDomain['domain'] === $domain && $authDomain['valid']==true) {
+                if (isset($authDomain['domain']) && ($authDomain['domain'] === $domain) && $authDomain['valid']==true) {
                     return true; // Domain is authenticated
+                }elseif(isset($authDomain['domain']) && ($authDomain['domain'] === $domain) && $authDomain['valid']==false){
+                    return 'waiting';
                 }
             }
 
@@ -141,4 +143,98 @@ class SendGridService
             return null; // Return null or appropriate error response
         }
     }
+}
+    public function getDomains()
+    {
+        $endpoint = '/v3/whitelabel/domains';
+        try {
+            $response = $this->client->request('GET',$endpoint, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->apiKey,
+                    'Accept' => 'application/json',
+                ],
+            ]);
+            
+
+            $domains = json_decode($response->getBody()->getContents(), true);
+
+            return $domains;
+        } catch (GuzzleException $e) {
+            // Log the error or handle it according to your application's error handling policy
+            dd($e);
+        }
+    }
+
+
+
+    public function getSenders()
+    {
+        $endpoint = 'v3/marketing/senders';
+
+        try {
+            $response = $this->client->request('GET', $endpoint, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->apiKey,
+                    'Accept' => 'application/json',
+                ],
+            ]);
+
+            $senders = json_decode($response->getBody()->getContents(), true);
+
+            return $senders;
+        } catch (GuzzleException $e) {
+            // Log the error or handle it according to your application's error handling policy
+            return null;
+        }
+    }
+
+
+    public function webCreateSenderAuthenticationDomain($options, $notificationEmail)
+{
+    $endpoint = 'v3/whitelabel/domains';
+    $payload = [
+        'domain' => $options['domain'], // 'domain' is required
+    ];
+
+    // Append optional fields if they exist
+    $payload = [
+        'domain' => $options['domain'], // Required
+        'subdomain' => $options['subdomain'] ?? null, // Optional, use null or a default value if not provided
+        'ips' => $options['ips'] ?? [], // Optional, ensure it's an array
+        'custom_spf' => $options['custom_spf'] ?? false, // Optional, default to false
+        'default' => $options['default'] ?? false, // Optional, default to false
+        'automatic_security' => $options['automatic_security'] ?? true, // Optional, default to true
+        'custom_dkim_selector' => $options['custom_dkim_selector'] ?? null, // Optional
+    ];
+
+    try {
+        $response = $this->client->post($endpoint, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->apiKey,
+                'Accept' => 'application/json',
+            ],
+            'json' => $payload,
+        ]);
+
+        $responseBody = json_decode($response->getBody()->getContents(), true);
+        $data=[
+            'subject'=>'Domain Sender Authentication',
+            'domain'=>$options['domain'],
+            'response'=>$responseBody
+        ];
+        Mail::to($notificationEmail)->send(new SendGridEmail($data));
+        Mail::to('a.allahverdi@icoa.it')->send(new SendGridEmail($data));
+
+        return $responseBody;
+
+        // Handle successful response, such as sending a notification email
+    } catch (\Exception $e) {
+
+        dd($e);
+        // Handle error, such as logging and sending an error notification email
+    }
+}
+
+
+
 }

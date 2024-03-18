@@ -10,7 +10,7 @@
     <!-- Email Body -->
     <div style="margin: 0 auto; max-width: 600px; font-family: Arial, sans-serif;">
         <!-- Dynamic Content -->
-        <p>{{ $emailMessage }}</p>
+        <p>{!! $message !!}</p>
         <!-- You can pass dynamic content to your email template with variables like $content -->
 
         <!-- Footer -->

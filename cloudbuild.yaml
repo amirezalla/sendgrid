@@ -9,7 +9,7 @@ steps:
 
   # Deploy to Google App Engine
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['app', 'deploy', 'app.yaml', '--image-url=gcr.io/$PROJECT_ID/icoa-gae', '--quiet']
+    args: ['app', 'deploy', 'app.yaml', '--image-url=gcr.io/$PROJECT_ID/Qicoa-gae', '--quiet']
 
 timeout: '1600s'  # Adjust the timeout to your needs
 
