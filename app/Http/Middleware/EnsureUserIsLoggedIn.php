@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class EnsureUserIsLoggedIn
 {
@@ -15,12 +16,13 @@ class EnsureUserIsLoggedIn
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::check()) {
-            // If the user is not logged in, redirect to the login page
+        // Check if 'user' session key is set
+        if (!Session::has('user')) {
+            // If the user session is not set, redirect to the login page
             return redirect('/login');
         }
 
-        // If the user is logged in, proceed with the request
+        // If the user session is set, proceed with the request
         return $next($request);
     }
 }
