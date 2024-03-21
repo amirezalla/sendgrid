@@ -27,3 +27,9 @@ Route::post('/sendBatchEmail', [TestEmailController::class, 'sendBatch'] );
 Route::post('/createSender', [SendGridController::class, 'createSender']);
 
 Route::post('/apiTest', [TestEmailController::class, 'apiTest']);
+
+
+
+
+
+

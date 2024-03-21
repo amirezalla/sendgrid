@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestEmailController;
 use App\Http\Controllers\SendGridController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +16,15 @@ use App\Http\Controllers\SendGridController;
 |
 */
 
-Route::get('/', [SendGridController::class, 'getDomains']);
 
- 
+Route::get('/login', [LoginController::class, 'getLogin']);
+
+// Define the route that the login form submits to
+Route::get('/login/google', [loginController::class, 'redirectToGoogle'])->name('login.google');
+
+Route::get('/login/google/callback', [loginController::class, 'handleGoogleCallback'])->name('login.google.callback');
+
+
 
 Route::get('/test-mail', function () {
     \Mail::raw('This is a simple test mail.', function ($message) {
@@ -27,40 +34,53 @@ Route::get('/test-mail', function () {
 });
 
 
-Route::group(['prefix' => 'domains'], function () {
-    Route::get('/list', [SendGridController::class, 'getDomains']);
+Route::middleware(['auth.session'])->group(function () {
 
-    Route::get('/add', function () {
-        return view('domains.add');
+    Route::get('/', [SendGridController::class, 'getDomains']);
+
+    Route::group(['prefix' => 'domains'], function () {
+        Route::get('/list', [SendGridController::class, 'getDomains']);
+    
+        Route::get('/add', function () {
+            return view('domains.add');
+        });
+    
+        Route::post('/add', [SendGridController::class, 'webAddDomain']);
+    
+    });
+    
+    Route::group(['prefix' => 'mail'], function () {
+    
+        Route::get('/send', function () {
+            return view('send');
+        });
+    
+        Route::post('/send', [TestEmailController::class, 'sendEmail']);
+    
+    });
+    
+    Route::group(['prefix' => 'senders'], function () {
+        Route::get('/list', [SendGridController::class, 'getSenders']);
+    
+        Route::get('/add', function () {
+            return view('senders.add');
+        });
+    
+        Route::post('/add', [SendGridController::class, 'webAddSender']);
+    
+    });
+    Route::get('/how-to-use', function () {
+        return view('howToUse');
     });
 
-    Route::post('/add', [SendGridController::class, 'webAddDomain']);
+
+
+
+
 
 });
 
-Route::group(['prefix' => 'mail'], function () {
 
-    Route::get('/send', function () {
-        return view('send');
-    });
-
-    Route::post('/send', [TestEmailController::class, 'sendEmail']);
-
-});
-
-Route::group(['prefix' => 'senders'], function () {
-    Route::get('/list', [SendGridController::class, 'getSenders']);
-
-    Route::get('/add', function () {
-        return view('senders.add');
-    });
-
-    Route::post('/add', [SendGridController::class, 'webAddSender']);
-
-});
-Route::get('/how-to-use', function () {
-    return view('howToUse');
-});
 
 
 
