@@ -37,10 +37,10 @@ class TestEmailController extends Controller
             $email->addContent(
                 "text/html", $emailHtmlContent
             );
-            $footer = new Footer();
-            $footer->setEnable(false);
-            $mail_settings = new MailSettings();
-            $mail_settings->setFooter($footer);
+            // $footer = new Footer();
+            // $footer->setEnable(false);
+            // $mail_settings = new MailSettings();
+            // $mail_settings->setFooter($footer);
             $sendgrid = new \SendGrid(getenv('MAIL_PASSWORD'));
             try {
                 $response = $sendgrid->send($email);
