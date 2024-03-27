@@ -20,8 +20,9 @@
                     <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i>
                     </div>
                     <div class="logo-header-main"><a href="index.html"><img class="img-fluid for-light img-100"
-                                src="../assets/images/logo/logo2.png" alt=""><img class="img-fluid for-dark"
-                                src="../assets/images/logo/logo.png" alt=""></a></div>
+                                src="{{ asset('assets/images/logo/logo2.png') }}" alt=""><img
+                                class="img-fluid for-dark" src="{{ asset('assets/images/logo/logo.png') }}"
+                                alt=""></a></div>
                 </div>
                 <div class="left-header col horizontal-wrapper ps-0">
                     <span href="" class="badge badge-light-primary f-14">Dashboard</span>
@@ -120,44 +121,44 @@
         </div>
     </div>
     <!-- latest jquery-->
-    <script src="../assets/js/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
     <!-- Bootstrap js-->
-    <script src="../assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
     <!-- feather icon js-->
-    <script src="../assets/js/icons/feather-icon/feather.min.js"></script>
-    <script src="../assets/js/icons/feather-icon/feather-icon.js"></script>
+    <script src="{{ asset('assets/js/icons/feather-icon/feather.min.js') }}"></script>
+    <script src="{{ asset('assets/js/icons/feather-icon/feather-icon.js') }}"></script>
     <!-- scrollbar js-->
-    <script src="../assets/js/scrollbar/simplebar.js"></script>
-    <script src="../assets/js/scrollbar/custom.js"></script>
+    <script src="{{ asset('assets/js/scrollbar/simplebar.js') }}"></script>
+    <script src="{{ asset('assets/js/scrollbar/custom.js') }}"></script>
     <!-- Sidebar jquery-->
-    <script src="../assets/js/config.js"></script>
-    <script src="../assets/js/sidebar-menu.js"></script>
-    <script src="../assets/js/chart/chartist/chartist.js"></script>
-    <script src="../assets/js/chart/chartist/chartist-plugin-tooltip.js"></script>
-    <script src="../assets/js/chart/apex-chart/apex-chart.js"></script>
-    <script src="../assets/js/chart/apex-chart/stock-prices.js"></script>
-    <script src="../assets/js/prism/prism.min.js"></script>
-    <script src="../assets/js/clipboard/clipboard.min.js"></script>
-    <script src="../assets/js/custom-card/custom-card.js"></script>
-    <script src="../assets/js/notify/bootstrap-notify.min.js"></script>
-    <script src="../assets/js/vector-map/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="../assets/js/vector-map/map/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="../assets/js/vector-map/map/jquery-jvectormap-us-aea-en.js"></script>
-    <script src="../assets/js/vector-map/map/jquery-jvectormap-uk-mill-en.js"></script>
-    <script src="../assets/js/vector-map/map/jquery-jvectormap-au-mill.js"></script>
-    <script src="../assets/js/vector-map/map/jquery-jvectormap-chicago-mill-en.js"></script>
-    <script src="../assets/js/vector-map/map/jquery-jvectormap-in-mill.js"></script>
-    <script src="../assets/js/vector-map/map/jquery-jvectormap-asia-mill.js"></script>
-    <script src="../assets/js/dashboard/default.js"></script>
-    <script src="../assets/js/notify/index.js"></script>
-    <script src="../assets/js/typeahead/handlebars.js"></script>
-    <script src="../assets/js/typeahead/typeahead.bundle.js"></script>
-    <script src="../assets/js/typeahead/typeahead.custom.js"></script>
-    <script src="../assets/js/typeahead-search/handlebars.js"></script>
-    <script src="../assets/js/typeahead-search/typeahead-custom.js"></script>
+    <script src="{{ asset('assets/js/config.js') }}"></script>
+    <script src="{{ asset('assets/js/sidebar-menu.js') }}"></script>
+    <script src="{{ asset('assets/js/chart/chartist/chartist.js') }}"></script>
+    <script src="{{ asset('assets/js/chart/chartist/chartist-plugin-tooltip.js') }}"></script>
+    <script src="{{ asset('assets/js/chart/apex-chart/apex-chart.js') }}"></script>
+    <script src="{{ asset('assets/js/chart/apex-chart/stock-prices.js') }}"></script>
+    <script src="{{ asset('assets/js/prism/prism.min.js') }}"></script>
+    <script src="{{ asset('assets/js/clipboard/clipboard.min.js') }}"></script>
+    <script src="{{ asset('assets/js/custom-card/custom-card.js') }}"></script>
+    <script src="{{ asset('assets/js/notify/bootstrap-notify.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vector-map/jquery-jvectormap-2.0.2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vector-map/map/jquery-jvectormap-world-mill-en.js') }}"></script>
+    <script src="{{ asset('assets/js/vector-map/map/jquery-jvectormap-us-aea-en.js') }}"></script>
+    <script src="{{ asset('assets/js/vector-map/map/jquery-jvectormap-uk-mill-en.js') }}"></script>
+    <script src="{{ asset('assets/js/vector-map/map/jquery-jvectormap-au-mill.js') }}"></script>
+    <script src="{{ asset('assets/js/vector-map/map/jquery-jvectormap-chicago-mill-en.js') }}"></script>
+    <script src="{{ asset('assets/js/vector-map/map/jquery-jvectormap-in-mill.js') }}"></script>
+    <script src="{{ asset('assets/js/vector-map/map/jquery-jvectormap-asia-mill.js') }}"></script>
+    <script src="{{ asset('assets/js/dashboard/default.js') }}"></script>
+    <script src="{{ asset('assets/js/notify/index.js') }}"></script>
+    <script src="{{ asset('assets/js/typeahead/handlebars.js') }}"></script>
+    <script src="{{ asset('assets/js/typeahead/typeahead.bundle.js') }}"></script>
+    <script src="{{ asset('assets/js/typeahead/typeahead.custom.js') }}"></script>
+    <script src="{{ asset('assets/js/typeahead-search/handlebars.js') }}"></script>
+    <script src="{{ asset('assets/js/typeahead-search/typeahead-custom.js') }}"></script>
     <!-- Template js-->
-    <script src="../assets/js/script.js"></script>
-    {{-- <script src="../assets/js/theme-customizer/customizer.js"></script> --}}
+    <script src="{{ asset('assets/js/script.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/theme-customizer/customizer.js"></script> --}}
     <!-- login js-->
 </body>
 

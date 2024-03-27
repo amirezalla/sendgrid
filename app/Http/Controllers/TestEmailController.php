@@ -25,7 +25,7 @@ class TestEmailController extends Controller
         $message = $request->input('message');
         $from = $request->input('from');
 
-        $emailHtmlContent = view('emails.engine', ['message' => $message])->render();
+        $emailHtmlContent = $this->addFooterToContent($message);
 
 
         $recipients = explode(',', $request->input('recipients'));
@@ -53,6 +53,15 @@ class TestEmailController extends Controller
 
         return true;
 
+    }
+
+    private function addFooterToContent($message){
+
+        return $message=$message.`
+            <footer style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #EEE; text-align: center;">
+                <p>The email has been sent by ICOA email engine</p>
+            </footer> `;
+        
     }
 
     public function sendBatch(Request $request)

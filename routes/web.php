@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestEmailController;
 use App\Http\Controllers\SendGridController;
+use App\Http\Controllers\SmtpController;
 use App\Http\Controllers\LoginController;
 
 /*
@@ -34,7 +35,7 @@ Route::get('/test-mail', function () {
 });
 
 
-Route::middleware(['auth.session'])->group(function () {
+// Route::middleware(['auth.session'])->group(function () {
 
     Route::get('/', [SendGridController::class, 'getDomains']);
 
@@ -75,11 +76,43 @@ Route::middleware(['auth.session'])->group(function () {
 
 
 
+    // _____________________ SMTP _____________________
 
 
+    // Grouping SMTP-related routes
+Route::group(['prefix' => 'smtp', 'as' => 'smtp.'], function () {
+    // Displaying all SMTP users
+    Route::get('/list', [SmtpController::class, 'list'])->name('list');
+
+    // Form to create a new SMTP user
+    Route::get('/add', function () {
+        return view('smtp.add');
+    })->name('add');
+    
+    // Storing a new SMTP user
+    Route::post('/store', [SmtpController::class, 'store'])->name('store');
+
+    // Showing the form to edit an existing SMTP user
+    Route::get('/edit/{id}', [SmtpController::class, 'edit'])->name('edit');
+
+    // Updating an existing SMTP user
+    Route::put('/update/{id}', [SmtpController::class, 'update'])->name('update');
+
+    Route::delete('/smtp/{id}', [SmtpController::class, 'destroy'])->name('destroy');
 
 });
+    // _____________________ END SMTP _____________________
 
+
+
+
+
+
+    Route::get('/how-to-use', function () {
+        return view('howToUse');
+    });
+
+    // }
 
 
 
