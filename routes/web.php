@@ -119,7 +119,7 @@ Route::group(['prefix' => 'smtp', 'as' => 'smtp.'], function () {
         return view('reports');
     });
 
-    }
+    });
 
 
 
