@@ -18,10 +18,13 @@ use Illuminate\Support\Facades\DB;
 
 $smtpUsage = Smtp::select(
     'domain',
-    'user',
+    'username',
     'usage',
-    DB::raw('(usage / (SELECT SUM(usage) FROM smtp) * 100) AS usage_percentage'),
-                            )->get();
+    DB::raw('(`usage` / (SELECT SUM(`usage`) FROM smtp) * 100) AS usage_percentage'),
+)->get();
+$usagePercentages = $smtpUsage->pluck('usage_percentage');
+$domains = $smtpUsage->pluck('domain');
+
                         @endphp
                         <div class="setting-list">
                             <ul class="list-unstyled setting-option">
@@ -58,7 +61,7 @@ $smtpUsage = Smtp::select(
                         @foreach ($smtpUsage as $usage)
                             <tr>
                                 <td>{{ $usage->domain }}</td>
-                                <td>{{ $usage->user }}</td>
+                                <td>{{ $usage->username }}</td>
                                 <td>{{ $usage->usage }}</td>
                                 <td>{{ number_format($usage->usage_percentage, 2) }}%</td>
                             </tr>

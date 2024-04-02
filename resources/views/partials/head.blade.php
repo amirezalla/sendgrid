@@ -35,4 +35,6 @@
     <link id="color" rel="stylesheet" href="{{ asset('assets/css/color-1.css') }}" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/responsive.css') }}">
+    <script src="{{ asset('assets/js/chart/apex-chart/apex-chart.js') }}"></script>
+
 </head>

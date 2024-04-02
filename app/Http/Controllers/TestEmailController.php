@@ -10,6 +10,8 @@ use App\Services\SendGridService;
 use App\Models\Smtp;
 use SendGrid\Mail\Footer;
 use SendGrid\Mail\Mail;
+use Illuminate\Support\Facades\Mail as LaravelMail;
+
 use SendGrid\Mail\MailSettings;
 
 
@@ -50,8 +52,10 @@ class TestEmailController extends Controller
                 // The second part of the result is the domain
                 $domain = $parts[1];
                 $smtp=Smtp::where('domain',$domain)->first();
-                if($smtp->usage >= $smtp->alert_number){
-                    Mail::to($smtp->alert)->send(new AlertEmail($smtp));
+                if($smtp->usage >= $smtp->alert_number && !$smtp->alert_sent){
+                    $smtp->alert_sent=1;
+                    $smtp->save();
+                    LaravelMail::to($smtp->alert)->send(new AlertEmail($smtp));
                 }
                 $response = $sendgrid->send($email);
                 print_r($response);

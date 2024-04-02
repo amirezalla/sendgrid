@@ -28,10 +28,10 @@ class GoogleCloudSecretManagerServiceProvider extends ServiceProvider
                 $decrypted = openssl_decrypt($encrypted, $method, $password, $options=0, $iv);
 
 
-                        putenv("MAIL_PASSWORD=$decrypted");
-                        Config::set('mail.mail      ers.smtp.password', $decrypted);
-                        $_ENV["MAIL_PASSWORD"] = $decrypted;
-                        $_SERVER["MAIL_PASSWORD"] = $decrypted;
+                putenv("MAIL_PASSWORD=$decrypted");
+                Config::set('mail.mailers.smtp.password', $decrypted);
+                $_ENV["MAIL_PASSWORD"] = $decrypted;
+                $_SERVER["MAIL_PASSWORD"] = $decrypted;
 
 
                 $storedValue = getenv('GCI_ENC'); // Replace MY_ENV_VARIABLE with your actual environment variable

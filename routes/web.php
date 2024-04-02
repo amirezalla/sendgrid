@@ -39,7 +39,7 @@ Route::get('/test-mail', function () {
 });
 
 
-// Route::middleware(['auth.session'])->group(function () {
+Route::middleware(['auth.session'])->group(function () {
 
     Route::get('/', [SendGridController::class, 'getDomains']);
 
@@ -119,7 +119,7 @@ Route::group(['prefix' => 'smtp', 'as' => 'smtp.'], function () {
         return view('reports');
     });
 
-    // }
+    }
 
 
 
