@@ -55,7 +55,6 @@ class TestEmailController extends Controller
                 }
                 $response = $sendgrid->send($email);
                 print_r($response);
-                Mail::to($recipient)->send(new TestEmail($inputs));
 
             } catch (Exception $e) {
                 echo 'Caught exception: '. $e->getMessage() ."\n";
