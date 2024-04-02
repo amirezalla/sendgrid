@@ -26,6 +26,7 @@ class SmtpController extends Controller
                     'password' => 'required|string|max:255',
                     'domain' => 'required|string|max:255',
                     'alert' => 'required|string|max:255',
+                    'alert_number' => 'required|string|max:255',
                     'status' => 'required|string|max:255',
                     'expires_at' => 'nullable|date',
                 ]);
@@ -61,6 +62,7 @@ class SmtpController extends Controller
             'username' => 'required|string|max:255',
             'domain' => 'required|string|max:255',
             'alert' => 'required|string|max:255',
+            'alert_number' => 'required|string|max:255',
             'status' => 'required|string|max:255',
             'expires_at' => 'nullable|date',
         ]);

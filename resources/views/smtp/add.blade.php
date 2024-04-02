@@ -43,6 +43,11 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="alert_number" class="form-label">Alert limit <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="alert_number" name="alert_number" required>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                             <select class="form-control" id="status" name="status">
                                 <option value="active">Active</option>

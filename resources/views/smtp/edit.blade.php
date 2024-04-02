@@ -47,9 +47,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="alert" class="form-label">Alert Email</label>
-                            <input type="email" class="form-control" name="alert" value="{{ $smtpUser->alert }}"
-                                required>
+                            <label for="alert_number" class="form-label">Alert limit <span
+                                    class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="alert_number" name="alert_number" required>
                         </div>
 
                         <div class="mb-3">

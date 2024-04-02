@@ -18,6 +18,7 @@
                                 <th>Password</th>
                                 <th>Domain</th>
                                 <th>Usage/Limit</th>
+                                <th>Limit Alert</th>
                                 <th>Status</th>
                                 <th>Expires At</th>
                                 <th>Actions</th>
@@ -31,6 +32,7 @@
                                     <td>{{ $user->domain }}</td>
                                     <td>{{ $user->usage }}/{{ $user->max_number == 0 ? 'Unlimited' : $user->max_number }}
                                     </td>
+                                    <td>{{ $user->alert_number }}</td>
                                     <td>{{ $user->status }}</td>
                                     <td>{{ optional($user->expires_at)->toDateString() }}</td>
                                     <td>

@@ -18,6 +18,7 @@ class Smtp extends Model
         'usage',
         'max_number',
         'alert',
+        'alert_number',
         'status',
         'expires_at',
     ];
