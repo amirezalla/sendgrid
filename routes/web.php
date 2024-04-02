@@ -115,6 +115,9 @@ Route::group(['prefix' => 'smtp', 'as' => 'smtp.'], function () {
     Route::get('/how-to-use', function () {
         return view('howToUse');
     });
+    Route::get('/reports', function () {
+        return view('reports');
+    });
 
     // }
 

@@ -42,6 +42,9 @@
                             <li><a href="/smtp/list">Manage Users</a></li>
                         </ul>
                     </li>
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
+                            href="/reports"><i data-feather="bar-chart"></i><span>Reports</span></a>
+                    </li>
                 </ul>
                 {{-- <ul class="sidebar-links" id="simple-bar">
                     <li class="back-btn">
