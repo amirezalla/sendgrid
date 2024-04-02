@@ -8,6 +8,7 @@ use App\Mail\AlertEmail;
 
 use App\Services\SendGridService;
 use App\Models\Smtp;
+use App\Models\Maillog;
 use SendGrid\Mail\Footer;
 use SendGrid\Mail\Mail;
 use Illuminate\Support\Facades\Mail as LaravelMail;
@@ -58,6 +59,17 @@ class TestEmailController extends Controller
                     LaravelMail::to($smtp->alert)->send(new AlertEmail($smtp));
                 }
                 $response = $sendgrid->send($email);
+                // Log the email sending action
+                
+                Maillog::create([
+                    'recipient' => $to,
+                    'subject' => $subject,
+                    'sender' => $from,
+                    'html'=>$emailHtmlContent,
+                    'sent_at' => now(),
+                    'via' => 'sendgrid'
+                ]);
+
                 print_r($response);
 
             } catch (Exception $e) {

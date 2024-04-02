@@ -27,6 +27,7 @@ $domains = $smtpUsage->pluck('domain');
 
                         @endphp
                         <div class="setting-list">
+                            <a class="btn btn-sm" href="/export-maillogs">Download Log CSV</a>
                             <ul class="list-unstyled setting-option">
                                 <li>
                                     <div class="setting-light"><i class="icon-layout-grid2"></i></div>

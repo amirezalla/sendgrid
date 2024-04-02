@@ -119,8 +119,12 @@ Route::group(['prefix' => 'smtp', 'as' => 'smtp.'], function () {
         return view('reports');
     });
 
+    Route::get('/export-maillogs', [MailLogController::class, 'exportCsv']);
+
     });
 
+
+    
 
 
 
