@@ -11,7 +11,7 @@ class AlertEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
+    public $smtp;
 
     public function __construct($smtp)
     {

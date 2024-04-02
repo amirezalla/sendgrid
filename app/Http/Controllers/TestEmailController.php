@@ -47,15 +47,15 @@ class TestEmailController extends Controller
             try {
                 $parts = explode("@", $from);
 
-            // The second part of the result is the domain
-            $domain = $parts[1];
+                // The second part of the result is the domain
+                $domain = $parts[1];
                 $smtp=Smtp::where('domain',$domain)->first();
                 if($smtp->usage >= $smtp->alert_number){
                     Mail::to($smtp->alert)->send(new AlertEmail($smtp));
                 }
                 $response = $sendgrid->send($email);
                 print_r($response);
-                     Mail::to($recipient)->send(new TestEmail($inputs));
+                Mail::to($recipient)->send(new TestEmail($inputs));
 
             } catch (Exception $e) {
                 echo 'Caught exception: '. $e->getMessage() ."\n";
