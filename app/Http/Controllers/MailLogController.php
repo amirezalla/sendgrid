@@ -11,20 +11,39 @@ class MailLogController extends Controller
 {
     public function exportCsv(Request $request)
     {
-        $csv = Writer::createFromFileObject(new \SplTempFileObject()); // create a temporary file
-        $csv->insertOne(['Recipient', 'Subject', 'Sender', 'HTML Content', 'Sent At', 'Via']); // Header
+        $fileName = 'maillog_export_' . date('Y-m-d_His') . '.csv';
+        $mailLogs = Maillog::all();
 
-        $mailLogs = Maillog::all(); // Retrieve all Maillog records
-        foreach ($mailLogs as $mailLog) {
-            $csv->insertOne($mailLog->toArray()); // Insert each record into the CSV
-        }
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
 
-        $csv->output('maillog_export_' . date('Y-m-d_His') . '.csv'); // Output the CSV to the browser
-        return response()->streamDownload(function () use ($csv) {
-            echo $csv->getContent();
-        }, 'maillog_export_' . date('Y-m-d_His') . '.csv', [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="maillog_export_' . date('Y-m-d_His') . '.csv"',
-        ]);
+        $columns = ['Recipient', 'Subject', 'Sender', 'HTML Content', 'Sent At', 'Via'];
+
+        $callback = function() use($mailLogs, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($mailLogs as $mailLog) {
+                $row = [
+                    $mailLog->recipient,
+                    $mailLog->subject,
+                    $mailLog->sender,
+                    $mailLog->html, // Ensure this does not contain commas or escape properly
+                    $mailLog->sent_at,
+                    $mailLog->via,
+                ];
+
+                fputcsv($file, $row);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

@@ -26,18 +26,10 @@ $usagePercentages = $smtpUsage->pluck('usage_percentage');
 $domains = $smtpUsage->pluck('domain');
 
                         @endphp
+
                         <div class="setting-list">
-                            <a class="btn btn-sm" href="/export-maillogs">Download Log CSV</a>
-                            <ul class="list-unstyled setting-option">
-                                <li>
-                                    <div class="setting-light"><i class="icon-layout-grid2"></i></div>
-                                </li>
-                                <li><i class="view-html fa fa-code font-white"></i></li>
-                                <li><i class="icofont icofont-maximize full-card font-white"></i></li>
-                                <li><i class="icofont icofont-minus minimize-card font-white"></i></li>
-                                <li><i class="icofont icofont-refresh reload-card font-white"></i></li>
-                                <li><i class="icofont icofont-error close-card font-white"> </i></li>
-                            </ul>
+                            <a class="btn btn-sm btn-primary" href="/export-maillogs"><i class='fa fa-download'></i> Download
+                                Log</a>
                         </div>
                     </div>
                 </div>

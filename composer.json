@@ -15,6 +15,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.12",
         "laravel/tinker": "^2.8",
+        "league/csv": "^9.15",
         "sendgrid/sendgrid": "~7"
     },
     "require-dev": {
