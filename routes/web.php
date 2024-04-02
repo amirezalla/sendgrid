@@ -20,6 +20,10 @@ use App\Http\Controllers\LoginController;
 
 Route::get('/login', [LoginController::class, 'getLogin']);
 
+Route::get('/welcome', function () {
+    return view('welcome');
+});
+
 // Define the route that the login form submits to
 Route::get('/login/google', [loginController::class, 'redirectToGoogle'])->name('login.google');
 
