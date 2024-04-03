@@ -41,7 +41,7 @@ Route::get('/test-mail', function () {
 });
 
 
-// Route::middleware(['auth.session'])->group(function () {
+Route::middleware(['auth.session'])->group(function () {
 
     Route::get('/', [SendGridController::class, 'getDomains']);
 
@@ -123,7 +123,7 @@ Route::group(['prefix' => 'smtp', 'as' => 'smtp.'], function () {
 
     Route::get('/export-maillogs', [MailLogController::class, 'exportCsv']);
 
-    // });
+    });
 
 
     
