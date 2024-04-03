@@ -185,25 +185,22 @@ fetch('https://sendgrid-hlixxcbawa-uc.a.run.app/api/sendEmail', {
                             </div>
                         </div>
                         <div class="tab-pane fade" id="smtp" role="tabpanel" aria-labelledby="smtp-tab">
-                            <div class="tab-pane fade" id="smtp" role="tabpanel" aria-labelledby="smtp-tab">
-                                <p>Please configure your SMTP settings below to enable email sending from your application:
-                                </p>
-                                <ul>
-                                    <li>SMTP Server (MAIL_HOST):
-                                        <code>34.29.73.169</code>
-                                    </li>
-                                    <li>SMTP Port (MAIL_PORT):<code>1025</code></li>
-                                    <li>SMTP Username (MAIL_USERNAME): The username for your SMTP user </li>
-                                    <li>SMTP Password (MAIL_PASSWORD): The password for your SMTP user </li>
-                                    <li>From Email Address (MAIL_FROM_ADDRESS): Any email address that uses the same domain
-                                        as the SMTP user. Example: <code>info@yourapp.com</code></li>
-                                    <li>From Name (MAIL_FROM_NAME): The name that will appear as the sender in the emails
-                                        sent from your app. Example: "Your App's Name"</li>
-                                </ul>
-                                <p>Insert your values and ensure your application is correctly using these settings to
-                                    handle outgoing emails.</p>
-                            </div>
-
+                            <p>Please configure your SMTP settings below to enable email sending from your application:
+                            </p>
+                            <ul>
+                                <li>SMTP Server (MAIL_HOST):
+                                    <code>34.29.73.169</code>
+                                </li>
+                                <li>SMTP Port (MAIL_PORT):<code>1025</code></li>
+                                <li>SMTP Username (MAIL_USERNAME): The username for your SMTP user </li>
+                                <li>SMTP Password (MAIL_PASSWORD): The password for your SMTP user </li>
+                                <li>From Email Address (MAIL_FROM_ADDRESS): Any email address that uses the same domain
+                                    as the SMTP user. Example: <code>info@yourapp.com</code></li>
+                                <li>From Name (MAIL_FROM_NAME): The name that will appear as the sender in the emails
+                                    sent from your app. Example: "Your App's Name"</li>
+                            </ul>
+                            <p>Insert your values and ensure your application is correctly using these settings to
+                                handle outgoing emails.</p>
                         </div>
                     </div>
                 </div>
