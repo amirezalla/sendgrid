@@ -10,7 +10,7 @@
     <!-- Email Body -->
     <div style="margin: 0 auto; max-width: 600px; font-family: Arial, sans-serif;">
         <!-- Dynamic Content -->
-        <p>{{ $message }}</p>
+        <p>{!! $message !!}</p>
 
 
         <footer style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #EEE; text-align: center;">
