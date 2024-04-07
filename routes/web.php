@@ -125,8 +125,9 @@ Route::group(['prefix' => 'smtp', 'as' => 'smtp.'], function () {
     Route::get('/export-maillogs', [MailLogController::class, 'exportCsv']);
 
     });
+    
+    Route::get('/run-scheduler',[SchedulerController::class,'run']);
 
-    Ruote:get('/run-scheduler',[SchedulerController::class,'run']);
 
     
 
