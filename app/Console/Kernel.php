@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('quotas:reset')->everyMinute();
+        $schedule->command('quotas:reset')->monthlyOn(1, '00:00');
         // $schedule->command('inspire')->hourly();
     }
 
