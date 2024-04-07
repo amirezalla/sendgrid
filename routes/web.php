@@ -126,7 +126,7 @@ Route::group(['prefix' => 'smtp', 'as' => 'smtp.'], function () {
 
     });
 
-    Ruote:get('/scheduler-run',[SchedulerController::class,'run']);
+    Ruote:get('/run-scheduler',[SchedulerController::class,'run']);
 
     
 
