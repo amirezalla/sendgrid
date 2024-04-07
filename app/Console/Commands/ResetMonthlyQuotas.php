@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Smtp;
-use App\Models\SmtpHistory;
+use App\Models\SmtpUsageHistory;
 use Carbon\Carbon;
 
 class ResetMonthlyQuotas extends Command
