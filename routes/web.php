@@ -5,6 +5,7 @@ use App\Http\Controllers\TestEmailController;
 use App\Http\Controllers\SendGridController;
 use App\Http\Controllers\SmtpController;
 use App\Http\Controllers\MailLogController;
+use App\Http\Controllers\SchedulerController;
 
 use App\Http\Controllers\LoginController;
 
@@ -125,6 +126,7 @@ Route::group(['prefix' => 'smtp', 'as' => 'smtp.'], function () {
 
     });
 
+    Ruote:get('/scheduler-run',[SchedulerController::class,'run']);
 
     
 
