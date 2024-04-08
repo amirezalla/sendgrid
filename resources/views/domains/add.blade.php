@@ -1,7 +1,7 @@
 @extends('layouts.app') {{-- Extend the layout --}}
 
 @section('content')
-    <form action="{{ route('smtp.add') }}" method="POST">
+    <form action="/domains/add" method="POST">
         @csrf
         <div class="row">
             <div class="col-12">
