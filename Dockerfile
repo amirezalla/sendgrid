@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     zip \
+    nodejs \
+    npm \
+    supervisor \
     unzip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -44,5 +47,8 @@ EXPOSE $PORT
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Start Apache in the foreground
-CMD ["apache2-foreground"]
+# Configure supervisor
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Start processes via Supervisor
+CMD ["/usr/bin/supervisord"]
