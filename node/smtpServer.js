@@ -1,10 +1,9 @@
-const { SMTPServer } = require('smtp-server');
-const { simpleParser } = require('mailparser');
-const axios = require('axios');
-const mysql = require('mysql');
-const os = require('os');
-const tls = require('tls');
-const fs = require('fs');
+import { SMTPServer } from 'smtp-server';
+import { simpleParser } from 'mailparser';
+import axios from 'axios';
+import mysql from 'mysql';
+import os from 'os';
+
 
 
 // Create database connection
@@ -22,9 +21,7 @@ db.connect(err => {
 
 // SMTP server options
 const serverOptions = {
-    key: fs.readFileSync('sendgrid.icoa.it-key.pem'),  // Path to your private key
-    cert: fs.readFileSync('sendgrid.icoa.it.pem'),  // Path to your certificate
-    // Not using secure (TLS) communication
+
     authOptional: false,  // Require authentication
     onData(stream, session, callback) {
         simpleParser(stream, async (err, parsed) => {
@@ -77,7 +74,7 @@ function getServerIPAddress() {
 const server = new SMTPServer(serverOptions);
 
 server.listen(1025, () => {  // Standard port for SMTPS
-    console.log('Secure SMTP server running on port 465');
+    console.log('Secure SMTP server running on port 1025');
 });
 
 
