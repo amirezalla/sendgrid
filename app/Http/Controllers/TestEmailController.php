@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Mail as LaravelMail;
 
 use SendGrid\Mail\MailSettings;
 
+use Illuminate\Support\Facades\DB;
+
+
 
 
 
@@ -80,6 +83,88 @@ class TestEmailController extends Controller
         return true;
 
     }
+
+
+
+    public function auth_send(Request $request){
+        
+    $username=$request->username;
+    $password=$request->password;
+        // Perform the query to find the user with the given username and password
+    $user = DB::table('smtp')
+    ->where('username', $username)
+    ->where('password', $password)
+    ->first();
+
+      // If user exists
+      if ($user) {
+          // Increment the usage count
+          DB::table('smtp')
+            ->where('username', $username)
+            ->increment('usage');
+
+            $subject = $request->input('subject');
+            $message = $request->input('message');
+            $from = $request->input('from');
+    
+            $emailHtmlContent = $this->addFooterToContent($message);
+    
+    
+            $recipients = explode(',', $request->input('recipients'));
+            foreach($recipients as $to){
+                $email = new Mail();
+                $email->setFrom($from, $from);
+                $email->setSubject($subject);
+                $email->addTo($to, $to);
+                $email->addContent(
+                    "text/html", $emailHtmlContent
+                );
+                // $footer = new Footer();
+                // $footer->setEnable(false);
+                // $mail_settings = new MailSettings();
+                // $mail_settings->setFooter($footer);
+                $sendgrid = new \SendGrid(getenv('MAIL_PASSWORD'));
+                try {
+                    $parts = explode("@", $from);
+    
+                    // The second part of the result is the domain
+                    $domain = $parts[1];
+                    $smtp=Smtp::where('domain',$domain)->first();
+                    if($smtp->usage >= $smtp->alert_number && !$smtp->alert_sent){
+                        $smtp->alert_sent=1;
+                        $smtp->save();
+                        LaravelMail::to($smtp->alert)->send(new AlertEmail($smtp));
+                    }
+                    $response = $sendgrid->send($email);
+                    // Log the email sending action
+                    
+                    Maillog::create([
+                        'recipient' => $to,
+                        'subject' => $subject,
+                        'sender' => $from,
+                        'html'=>$emailHtmlContent,
+                        'sent_at' => now(),
+                        'via' => 'sendgrid'
+                    ]);
+    
+                    print_r($response);
+    
+                } catch (Exception $e) {
+                    echo 'Caught exception: '. $e->getMessage() ."\n";
+                }
+            }
+    
+            return true;
+      }
+
+      // If authentication fails
+      return response()->json([
+          'error' => 'Invalid username or password.'
+      ], 401);
+  }
+
+
+
 
     private function addFooterToContent($message){
 
